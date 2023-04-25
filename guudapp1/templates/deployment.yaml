@@ -6,6 +6,7 @@ metadata:
   labels:
     app: {{ .Values.appName }}
 spec:
+  # TODO to values
   replicas: 5
   selector:
     matchLabels:
@@ -20,11 +21,13 @@ spec:
       containers:
       - name: mycontainer
         image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+        # TODO values
         ports:
         - containerPort: 80
         envFrom:
         - configMapRef:
             name: {{ .Values.configmap.name }}
+        # TODO move the whole resources section to the into values (example from ingress deamonset)
         resources:
           requests:
             memory: "16Mi" 
