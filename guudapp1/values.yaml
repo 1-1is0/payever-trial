@@ -6,10 +6,14 @@ configmap :
     CUSTOM_HEADER: "this app was deployed with helm !"
 
 replicas: 5
-
+labels : 
+  app: myhelmapp
+  tier: frontend
 image: 
   name: devopsjourney1/mywebapp
   tag: latest
+
+containerPort: 80
 
 
 resources:

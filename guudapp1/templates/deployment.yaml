@@ -7,23 +7,22 @@ metadata:
     app: {{ .Values.appName }}
 spec:
   # TODO to values
-  replicas: {{ .Values.replicas}}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: {{ .Values.appName }}
       tier: frontend
   template:
     metadata:
-      labels:
-        app: {{ .Values.appName }}
-        tier: frontend
+      labels: "{{ .Values.labels.app }}:{{ .Values.labels.frontend }}"
+
     spec: # Pod spec
       containers:
       - name: mycontainer
         image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
         # TODO values
         ports:
-        - containerPort: 80
+        - containerPort: {{ .Values.containerPort }}
         envFrom:
         - configMapRef:
             name: {{ .Values.configmap.name }}
