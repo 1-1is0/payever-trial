@@ -97,10 +97,6 @@ Expand wildcard TLS name.
 {{- printf "%s-%s" (include "nginx-ingress.fullname" .) "wildcard-tls" -}}
 {{- end -}}
 
-{{- define "nginx-ingress.tag" -}}
-{{- default .Chart.AppVersion .Values.controller.image.tag -}}
-{{- end -}}
-{{- end -}}
 
 {{- define "nginx-ingress.tag" -}}
 {{- default .Chart.AppVersion .Values.controller.image.tag -}}
