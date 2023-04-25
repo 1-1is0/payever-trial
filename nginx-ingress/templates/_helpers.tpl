@@ -1,5 +1,4 @@
-{{/* vim: set filetype=mustache: */}}
-
+ 
 {{/*
 Expand the name of the chart.
 */}}
@@ -13,17 +12,20 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "nginx-ingress.fullname" -}}
-{{- if .Values.fullnameOverride }}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- $name := default .Chart.Name .Values.nameOverride }}
+{{- $name := default .Chart.Name }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
-{{- end }}
+
+{{/*
+Expand the name of the configmap.
+*/}}
+{{- define "nginx-ingress.configName" -}}
+{{- default (include "nginx-ingress.fullname" .) .Values.controller.config.name -}}
+{{- end -}}
 
 {{/*
 Create a default fully qualified controller name.
@@ -60,16 +62,6 @@ app.kubernetes.io/name: {{ include "nginx-ingress.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{/*
-Expand the name of the configmap.
-*/}}
-{{- define "nginx-ingress.configName" -}}
-{{- if .Values.controller.customConfigMap -}}
-{{ .Values.controller.customConfigMap }}
-{{- else -}}
-{{- default (include "nginx-ingress.fullname" .) .Values.controller.config.name -}}
-{{- end -}}
-{{- end -}}
 
 {{/*
 Expand leader election lock name.
@@ -82,25 +74,17 @@ Expand leader election lock name.
 {{- end -}}
 {{- end -}}
 
+
 {{/*
 Expand service account name.
 */}}
 {{- define "nginx-ingress.serviceAccountName" -}}
-{{- default (include "nginx-ingress.fullname" .) .Values.controller.serviceAccount.name -}}
+{{- default (include "nginx-ingress.fullname" .) -}}
 {{- end -}}
 
-{{/*
-Expand default TLS name.
-*/}}
+
 {{- define "nginx-ingress.defaultTLSName" -}}
 {{- printf "%s-%s" (include "nginx-ingress.fullname" .) "default-server-tls" -}}
-{{- end -}}
-
-{{/*
-Expand wildcard TLS name.
-*/}}
-{{- define "nginx-ingress.wildcardTLSName" -}}
-{{- printf "%s-%s" (include "nginx-ingress.fullname" .) "wildcard-tls" -}}
 {{- end -}}
 
 {{- define "nginx-ingress.tag" -}}
