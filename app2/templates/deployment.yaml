@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.pod.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.pod.labels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.pod.labels.app }}
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+    spec:
+      containers:
+      - name: {{ .Values.appName }}
+        image: {{ include "app2.image" . }}
+        ports:
+        - containerPort: {{ .Values.pod.containerPort }}

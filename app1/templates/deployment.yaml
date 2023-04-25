@@ -6,26 +6,23 @@ metadata:
   labels:
     app: {{ .Values.appName }}
 spec:
-  # TODO to values
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.pod.replicas }}
   selector:
     matchLabels:
       app: {{ .Values.appName }}
       tier: frontend
   template:
     metadata:
-      labels: "{{ .Values.labels.app }}:{{ .Values.labels.frontend }}"
+      labels: "{{ .Values.pod.labels.app }}:{{ .Values.pod.labels.frontend }}"
 
     spec: # Pod spec
       containers:
       - name: mycontainer
-        image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
-        # TODO values
+        image: "{{ .Values.pod.image.name }}:{{ .Values.pod.image.tag }}"
         ports:
-        - containerPort: {{ .Values.containerPort }}
+        - containerPort: {{ .Values.pod.containerPort }}
         envFrom:
         - configMapRef:
             name: {{ .Values.configmap.name }}
-        # TODO move the whole resources section to the into values (example from ingress deamonset)
         resources:
-{{ toYaml .Values.resources | indent 10 }}
+{{ toYaml .Values.pod.resources | indent 10 }}

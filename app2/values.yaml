@@ -1,0 +1,22 @@
+appName: app2
+namespace: app2
+pod:
+  replicas: 2
+  labels:
+    app: app2
+  image:
+    repository: nginxdemos/hello
+    tag: plain-text
+
+  containerPort: 80
+
+  resources:
+    requests:
+      memory: "16Mi"
+      cpu: "50m"
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+
+ingress:
+  host: "app2.guud1.space"

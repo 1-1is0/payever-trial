@@ -1,0 +1,30 @@
+appName: app1
+namespace: app1-ns
+configmap:
+  name: app1-config
+  data:
+    BG_COLOR: "#12181b"
+    FONT_COLOR: "#FFFFFF"
+    CUSTOM_HEADER: "this app was deployed with helm !"
+
+pod:
+  replicas: 5
+  labels:
+    app: app1
+    tier: frontend
+  image:
+    name: devopsjourney1/mywebapp
+    tag: latest
+
+  containerPort: 80
+
+  resources:
+    requests:
+      memory: "16Mi"
+      cpu: "50m"
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+
+ingress:
+  host: "app1.guud1.space"
