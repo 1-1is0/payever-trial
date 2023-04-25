@@ -7,7 +7,7 @@ metadata:
     app: {{ .Values.appName }}
 spec:
   # TODO to values
-  replicas: 5
+  replicas: {{ .Values.replicas}}
   selector:
     matchLabels:
       app: {{ .Values.appName }}
@@ -29,4 +29,4 @@ spec:
             name: {{ .Values.configmap.name }}
         # TODO move the whole resources section to the into values (example from ingress deamonset)
         resources:
-{{ toYaml .Values.controller.resources | indent 10 }}
+{{ toYaml .Values.resources | indent 10 }}
