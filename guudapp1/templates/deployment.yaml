@@ -29,9 +29,4 @@ spec:
             name: {{ .Values.configmap.name }}
         # TODO move the whole resources section to the into values (example from ingress deamonset)
         resources:
-          requests:
-            memory: "16Mi" 
-            cpu: "50m"    # 500milliCPUs (1/2 CPU)
-          limits:
-            memory: "128Mi"
-            cpu: "100m"
+{{ toYaml .Values.controller.resources | indent 10 }}
