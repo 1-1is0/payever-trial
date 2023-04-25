@@ -83,8 +83,23 @@ Expand service account name.
 {{- end -}}
 
 
+{{/*
+Expand default TLS name.
+*/}}
 {{- define "nginx-ingress.defaultTLSName" -}}
 {{- printf "%s-%s" (include "nginx-ingress.fullname" .) "default-server-tls" -}}
+{{- end -}}
+
+{{/*
+Expand wildcard TLS name.
+*/}}
+{{- define "nginx-ingress.wildcardTLSName" -}}
+{{- printf "%s-%s" (include "nginx-ingress.fullname" .) "wildcard-tls" -}}
+{{- end -}}
+
+{{- define "nginx-ingress.tag" -}}
+{{- default .Chart.AppVersion .Values.controller.image.tag -}}
+{{- end -}}
 {{- end -}}
 
 {{- define "nginx-ingress.tag" -}}
