@@ -19,4 +19,4 @@ spec:
         - containerPort: 9876
         env:
         - name: SIMPLE_SERVICE_VERSION
-          value: "0.9"
+          value: "1.0"
