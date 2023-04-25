@@ -146,7 +146,6 @@ spec:
 
           - -nginx-configmaps=$(POD_NAMESPACE)/{{ include "nginx-ingress.configName" . }}
 
-# TODO fix after create secret
 {{- if .Values.controller.defaultTLS.secret }}
           - -default-server-tls-secret={{ .Values.controller.defaultTLS.secret }}
 {{ else if and (.Values.controller.defaultTLS.cert) (.Values.controller.defaultTLS.key) }}
@@ -187,7 +186,6 @@ spec:
           - -leader-election-lock-name={{ include "nginx-ingress.leaderElectionName" . }}
   {{- end }}
 
-# TODO should i remove wildcard tls?
 {{- if .Values.controller.wildcardTLS.secret }}
           - -wildcard-tls-secret={{ .Values.controller.wildcardTLS.secret }}
 {{- else if and .Values.controller.wildcardTLS.cert .Values.controller.wildcardTLS.key }}

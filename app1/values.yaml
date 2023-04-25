@@ -1,20 +1,12 @@
 appName: app1
-namespace: app1-ns
-configmap:
-  name: app1-config
-  data:
-    BG_COLOR: "#12181b"
-    FONT_COLOR: "#FFFFFF"
-    CUSTOM_HEADER: "this app was deployed with helm !"
-
+namespace: app1
 pod:
-  replicas: 5
+  replicas: 2
   labels:
     app: app1
-    tier: frontend
   image:
-    name: devopsjourney1/mywebapp
-    tag: latest
+    repository: nginxdemos/hello
+    tag: plain-text
 
   containerPort: 80
 

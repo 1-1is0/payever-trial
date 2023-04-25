@@ -3,26 +3,20 @@ kind: Deployment
 metadata:
   name: {{ .Values.appName }}
   namespace: {{ .Values.namespace }}
-  labels:
-    app: {{ .Values.appName }}
 spec:
   replicas: {{ .Values.pod.replicas }}
   selector:
     matchLabels:
-      app: {{ .Values.appName }}
-      tier: frontend
+      app: {{ .Values.pod.labels.app }}
   template:
     metadata:
-      labels: "{{ .Values.pod.labels.app }}:{{ .Values.pod.labels.frontend }}"
-
-    spec: # Pod spec
+      labels:
+        app: {{ .Values.pod.labels.app }}
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+    spec:
       containers:
-      - name: mycontainer
-        image: "{{ .Values.pod.image.name }}:{{ .Values.pod.image.tag }}"
+      - name: {{ .Values.appName }}
+        image: {{ include "app1.image" . }}
         ports:
         - containerPort: {{ .Values.pod.containerPort }}
-        envFrom:
-        - configMapRef:
-            name: {{ .Values.configmap.name }}
-        resources:
-{{ toYaml .Values.pod.resources | indent 10 }}
